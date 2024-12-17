@@ -28,12 +28,15 @@ DEFAULT_APPS = [
 
 # apps that you create for your project
 DJANGO_APPS = [
-    'apps.togiveaway'
+    'apps.togiveaway',
+    'apps.user',
+    'drf_yasg',
 ]
 
 # third-party apps that are installed via pip
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + DJANGO_APPS + THIRD_PARTY_APPS
@@ -95,11 +98,52 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
+
+# Define a custom security scheme
+SECURITY_SCHEMES = {
+    "Token": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Enter your token in the format: Token <your_token>",
+    }
+}
+
+# Add the security definition to the schema
+swagger_security_definitions = {
+    "default": [
+        {
+            "Authorization": {"type": "Token"},
+        }
+    ]
+}
+
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
+AUTH_USER_MODEL = 'user.CustomUser'
 
 # Static files
 STATIC_URL = 'static/'
