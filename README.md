@@ -97,7 +97,7 @@ Follow these steps to set up and run the ToGiveAway application locally:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/togiveaway.git
+   git clone https://github.com/expertnooob/togiveaway.git
    cd togiveaway
    ```
 
